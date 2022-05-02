@@ -6,10 +6,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from scrapy.loader import ItemLoader
 from scraper.items import ScraperItem
 
+
 class MicroplaySpider(scrapy.Spider):
-    """
-    Microplay Spider. Download each products name, price, description and url.
-    """
     name = "microplay"
     start_urls = [
         "https://www.microplay.cl/productos/juegos",
@@ -26,9 +24,6 @@ class MicroplaySpider(scrapy.Spider):
     chrome_options.headless = True
 
     def start_requests(self):
-        """
-        Function to scrape all products links.
-        """
         btn_xpath = ".//a[@class='load']"
         card_xpath = ".//div[@class='card__item']/a"
 
@@ -38,13 +33,12 @@ class MicroplaySpider(scrapy.Spider):
             driver.get(url)
 
             # LOAD ITEMS
-
             while True:
                 try:
                     wait.until(EC.element_to_be_clickable((By.XPATH, btn_xpath)))
                     driver.find_element_by_xpath(btn_xpath).click()
-                except Exception as e:
-                    print(e)
+                except Exception as exce:
+                    print(exce)
                     break
 
             # ITEMS LINKS
@@ -56,11 +50,11 @@ class MicroplaySpider(scrapy.Spider):
 
         driver.quit()
 
-    def parse(self, response):
+    def parse(self, response, **kwargs):
         loader = ItemLoader(item=ScraperItem(), selector=response)
         loader.add_xpath("name", ".//section[contains(@class, 'content__ficha')]/h1/text()")
         loader.add_xpath("price", ".//span[@class='text_web']/strong")
-        loader.add_xpath("description", ".//div[@id='box-descripcion']")
         loader.add_value("url", response.request.url)
+        loader.add_xpath("description", ".//div[@id='box-descripcion']")
 
         yield loader.load_item()
