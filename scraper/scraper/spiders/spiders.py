@@ -8,7 +8,7 @@ from scraper.items import ScraperItem
 
 class MicroplaySpider(scrapy.Spider):
     """
-    Microplay Spider.
+    Microplay Spider. Download each products name, price, description and url.
     """
     name = "microplay"
     start_urls = [
@@ -27,7 +27,7 @@ class MicroplaySpider(scrapy.Spider):
 
     def start_requests(self):
         """
-        Function to scrape all product links.
+        Function to scrape all products links.
         """
         btn_xpath = ".//a[@class='load']"
         card_xpath = ".//div[@class='card__item']/a"
