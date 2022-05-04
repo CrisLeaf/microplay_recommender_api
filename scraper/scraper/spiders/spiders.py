@@ -23,26 +23,26 @@ class MicroplaySpider(scrapy.Spider):
     chrome_options = ChromeOptions()
     chrome_options.headless = True
 
+    btn_xpath = ".//a[@class='load']"
+    card_xpath = ".//div[@class='card__item']/a"
+
+    def _load_items(self, driver, wait):
+        while True:
+            try:
+                wait.until(EC.element_to_be_clickable((By.XPATH, self.btn_xpath)))
+                driver.find_element_by_xpath(self.btn_xpath).click()
+            except Exception as exce:
+                print(exce)
+                break
+
     def start_requests(self):
-        btn_xpath = ".//a[@class='load']"
-        card_xpath = ".//div[@class='card__item']/a"
+        driver = Chrome(options=self.chrome_options)
+        wait = WebDriverWait(driver, 10)
 
         for url in self.start_urls:
-            driver = Chrome(options=self.chrome_options)
-            wait = WebDriverWait(driver, 10)
             driver.get(url)
-
-            # LOAD ITEMS
-            while True:
-                try:
-                    wait.until(EC.element_to_be_clickable((By.XPATH, btn_xpath)))
-                    driver.find_element_by_xpath(btn_xpath).click()
-                except Exception as exce:
-                    print(exce)
-                    break
-
-            # ITEMS LINKS
-            products = driver.find_elements(by=By.XPATH, value=card_xpath)
+            self._load_items(driver, wait)
+            products = driver.find_elements(by=By.XPATH, value=self.card_xpath)
 
             for prod in products:
                 prod_url = prod.get_attribute("href")
