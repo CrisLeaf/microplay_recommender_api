@@ -1,57 +1,40 @@
 import numpy as np
 import pandas as pd
-import spacy
 from stop_words import get_stop_words
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
+from scipy import sparse
 
 
 class Recommendator():
     def __init__(self, df):
         self.df = df
-        self.nlp = spacy.load("es_core_news_sm")
         self.stop_words = get_stop_words("es")
         self.similarity = None
 
-    def _get_discount(self, value):
-        try:
-            output = str(value).split()[1].replace("-", "").replace("%", "")
-        except:
-            output = 0
-
-        return int(output)
-
-    def _clean_string(self, string):
-        output = ""
-
-        for letter in string.lower():
-            if letter in "abcdefghijklmnñopqrstuvwxyz0123456789áéíóú ":
-                output += letter
-            else:
-                output += " "
-
-        return " ".join([token.lemma_ for token in self.nlp(" ".join(output.split()))])
-
     def train(self):
-        print("Training...")
-        self.df["price"].fillna(value=999999, inplace=True)
-        self.df["name"].fillna(value="", inplace=True)
-        self.df["description"].fillna(value="", inplace=True)
-
-        self.df["discount"] = self.df["price"].apply(lambda x: self._get_discount(x))
-        self.df["price"] = self.df["price"].apply(lambda x: int(str(x).split()[0]))
-        self.df["name_cleaned"] = self.df["name"].apply(lambda x: self._clean_string(x))
-        self.df["description_cleaned"] = self.df["description"].apply(lambda x: self._clean_string(x))
+        count = CountVectorizer(stop_words=self.stop_words)
+        name_mat = count.fit_transform(self.df["name"])
+        name_sim = linear_kernel(name_mat, name_mat, dense_output=False)
+        name_sim = name_sim / np.max(name_sim)
 
         tfidf = TfidfVectorizer(stop_words=self.stop_words)
-        description_mat = tfidf.fit_transform(self.df["description_cleaned"])
+        description_mat = tfidf.fit_transform(self.df["description"])
         description_sim = linear_kernel(description_mat, description_mat, dense_output=False)
 
-        count = CountVectorizer(stop_words=self.stop_words)
-        name_mat = count.fit_transform(self.df["name_cleaned"])
-        name_sim = linear_kernel(name_mat, name_mat, dense_output=False)
+        price_sim = np.array(
+            [[abs(price1 - price2) for price1 in self.df["price"]]
+            for price2 in self.df["price"]]
+        )
+        price_sim = 1 - price_sim / self.df["price"].max()
+        price_sim = sparse.csr_matrix(price_sim)
 
-        self.similarity = description_sim + name_sim
+        discount_sim = [disc for disc in self.df["discount"]]
+        discount_sim = np.tile(discount_sim, (self.df.shape[0], 1))
+        discount_sim = discount_sim / max(self.df["discount"])
+        discount_sim = sparse.csr_matrix(discount_sim)
+
+        self.similarity = 0.3*name_sim + 0.3*description_sim + 0.3*price_sim + 0.1*discount_sim
 
         return self
 
@@ -61,7 +44,7 @@ class Recommendator():
 
         indexes = pd.Series(self.df.index, index=self.df["url"])
         index = indexes[url]
-        # index = indexes["https://www.microplay.cl/producto/gta-v-grand-theft-auto-v-premium-online-edition-ps4/"]
+
 
         scores = list(enumerate(self.similarity.toarray()[index]))
         scores = sorted(scores, key=lambda x: x[1], reverse=True)
@@ -73,10 +56,12 @@ class Recommendator():
         }
 
 if __name__ == "__main__":
-    df = pd.read_csv("scraper/data.csv")
+    df = pd.read_csv("train_data.csv")
     reco = Recommendator(df)
 
     reco.train()
+
+    # Example
     output = reco.recommend(
         "https://www.microplay.cl/producto/llavero-dragon-ball-z-kame-symbol-3d/"
     )
