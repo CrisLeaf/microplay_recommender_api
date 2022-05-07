@@ -1,15 +1,14 @@
 import pandas as pd
-from flask import Flask, request, jsonify
-from recommendations import Recommender
+from flask import Blueprint, request, jsonify
+from .recommender_bot import Recommender
 
+bp = Blueprint("recommender_app", __name__, url_prefix="/")
 
-app = Flask(__name__)
-
-@app.route("/", methods=["GET"])
+@bp.route("/", methods=["GET"])
 def home():
     return """Home"""
 
-@app.route("/train", methods=["GET"])
+@bp.route("/train", methods=["GET"])
 def train():
     df = pd.read_csv("train_data.csv")
 
@@ -19,13 +18,9 @@ def train():
 
     return """Model trained."""
 
-@app.route("/reco", methods=["GET"])
+@bp.route("/reco", methods=["GET"])
 def get_results():
-    train() #
     requested_url = request.args.get("url")
     recommendations = reco.recommend(requested_url)
 
     return jsonify({"recommendations": recommendations.tolist()})
-
-if __name__ == "__main__":
-    app.run(debug=True)
