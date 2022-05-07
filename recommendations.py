@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import linear_kernel
 from scipy import sparse
 
 
-class Recommendator():
+class Recommender():
     def __init__(self, df):
         self.df = df
         self.stop_words = get_stop_words("es")
@@ -40,7 +40,7 @@ class Recommendator():
 
     def recommend(self, url):
         if self.similarity is None:
-            raise AttributeError("The Recommendator is not trained.")
+            raise AttributeError("The Recommender is not trained.")
 
         indexes = pd.Series(self.df.index, index=self.df["url"])
         index = indexes[url]
@@ -51,13 +51,11 @@ class Recommendator():
         scores = [s[0] for s in scores]
         scores.remove(index)
 
-        return {
-            "urls": self.df["url"].iloc[scores[0:5]].values
-        }
+        return self.df["url"].iloc[scores[0:5]].values
 
 if __name__ == "__main__":
     df = pd.read_csv("train_data.csv")
-    reco = Recommendator(df)
+    reco = Recommender(df)
 
     reco.train()
 
