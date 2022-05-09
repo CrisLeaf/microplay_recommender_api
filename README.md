@@ -1,4 +1,4 @@
-# Sketchs Bot App
+# Microplay Recommender API
 
 A scraper which get all products data from the
 [Microplay webpage](https://www.microplay.cl/)
