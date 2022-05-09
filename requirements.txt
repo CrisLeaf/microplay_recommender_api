@@ -11,3 +11,4 @@ selenium==4.1.5
 spacy==3.2.1
 stop_words==2018.7.23
 w3lib==1.22.0
+gunicorn==20.1.0
