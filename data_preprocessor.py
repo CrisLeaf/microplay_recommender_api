@@ -33,7 +33,8 @@ if __name__ == "__main__":
 
     print("Preprocessing columns...")
     df["price"].fillna(value=-9999, inplace=True)
-    df["name"].fillna(value="", inplace=True)
+    df.drop(index=df[df["name"] == "UPS se agotó !!!"].index, inplace=True)
+    df["name_original"] = df["name"]
     df["description"].fillna(value="", inplace=True)
     df["discount"] = df["price"].apply(lambda x: get_discount(x))
     df["price"] = df["price"].apply(lambda x: int(str(x).split()[0]))
