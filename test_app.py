@@ -12,10 +12,11 @@ def test_app():
     c = app.test_client()
     c.get("/train")
 
-    for i in np.random.randint(0, df.shape[0], 100):
+    for i in np.random.randint(0, df.shape[0], 5):
         url = df["url"].iloc[i]
         response = c.get(f"/reco?url={url}")
         data = json.loads(response.get_data())["recommendations"]
 
         for d in data:
-            assert d in df["url"].values
+            assert d[0] in df["url"].values
+            assert d[1] in df["name_original"].values

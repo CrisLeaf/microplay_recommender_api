@@ -56,5 +56,6 @@ class MicroplaySpider(scrapy.Spider):
         loader.add_xpath("price", ".//span[@class='text_web']/strong")
         loader.add_value("url", response.request.url)
         loader.add_xpath("description", ".//div[@id='box-descripcion']")
+        loader.add_xpath("image", ".//div[@class='img-portada-wrapper']/img/@src")
 
         yield loader.load_item()

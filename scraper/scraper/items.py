@@ -29,3 +29,7 @@ class ScraperItem(scrapy.Item):
         input_processor=MapCompose(clean_string),
         output_processor=TakeFirst()
     )
+    image = scrapy.Field(
+        input_processor=MapCompose(),
+        output_processor=TakeFirst()
+    )
