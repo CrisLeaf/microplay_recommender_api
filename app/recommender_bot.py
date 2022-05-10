@@ -45,14 +45,12 @@ class Recommender():
         indexes = pd.Series(self.df.index, index=self.df["url"])
         index = indexes[url]
 
-
         scores = list(enumerate(self.similarity.toarray()[index]))
         scores = sorted(scores, key=lambda x: x[1], reverse=True)
         scores = [s[0] for s in scores]
-        scores.remove(index)
+        scores.insert(0, scores.pop(scores.index(index)))
 
-        return self.df[["url", "name_original", "image"]].iloc[scores[0:5]].values
-
+        return self.df[["url", "name_original", "image"]].iloc[scores[0:6]].values
 
 if __name__ == "__main__":
     df = pd.read_csv("train_data.csv")

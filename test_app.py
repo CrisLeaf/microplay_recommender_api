@@ -21,3 +21,5 @@ def test_app():
             assert d[0] in df["url"].values
             assert d[1] in df["name_original"].values
             assert d[2] in df["image"].values
+
+        assert data[0][0] == url
