@@ -26,7 +26,6 @@ def train():
 
 @bp.route("/reco", methods=["GET"])
 def get_results():
-    train()
     requested_url = request.args.get("url")
     recommendations = reco.recommend(requested_url)
 
