@@ -18,11 +18,11 @@ def train():
 
     return """Model trained."""
 
-@bp.route("/list", methods=["GET"])
-def list():
-    names_list = pd.read_csv("train_data.csv")["name_original"].values
-
-    return jsonify({"names": names_list.tolist()})
+# @bp.route("/list", methods=["GET"])
+# def list():
+#     names_list = pd.read_csv("train_data.csv")["name_original"].values
+#
+#     return jsonify({"names": names_list.tolist()})
 
 @bp.route("/reco", methods=["GET"])
 def get_results():

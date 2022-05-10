@@ -51,7 +51,7 @@ class Recommender():
         scores = [s[0] for s in scores]
         scores.remove(index)
 
-        return self.df[["url", "name_original"]].iloc[scores[0:5]].values
+        return self.df[["url", "name_original", "image"]].iloc[scores[0:5]].values
 
 
 if __name__ == "__main__":
