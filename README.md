@@ -1,46 +1,39 @@
 # Microplay Recommender API
 
-A scraper which get all products data from the
-[Microplay webpage](https://www.microplay.cl/)
+A microplay recommendation system api. We used
+[Microplay webpage](https://www.microplay.cl/) data, to builda a recommendation system. It was developed using Flask.
 
 ## Requirements
 
-The project was developed in a Python 3.9 environment using the following libraries:
-
-1. [Scrapy](https://scrapy.org/)
-2. [Selenium](https://www.selenium.dev/)
-
-
-## Installation
-
-- Environment Preparation
-
-In a Python 3.9 environment issue
+To install the required libraries, on terminal run:
 
 ```
-pip install Scrapy
-pip install selenium
+pip install -r requirements.txt
 ```
 
-- Chrome driver installation
+## Data
 
-We must install the browser that Selenium will use for the simulations. To use Chrome, install it
-in the following link:
+The data was downloaded from [microplay](https://www.microplay.cl), using Scrapy, Selenium and Chrome web driver.
 
-https://www.google.com/chrome/
+## How to use
 
-And install the Chrome driver in the link:
+First, one need to train the recommender model. Calling:
 
-https://chromedriver.chromium.org/
+`
+https://microplay-api.herokuapp.com/train
+`
 
-## How to run
+Next, look for any microplay product and add 'reco?url=' to the call. For example:
 
-To run the scraper, on terminal type
+`
+https://microplay-api.herokuapp.com/reco?url=https://www.microplay.cl/producto/mouse-gamer-rgb-griffin-m607w-blanco-redragon/
+`
 
-```
-cd scraper/
-scrapy crawl microplay -O data.csv
-```
+You would get the following:
+
+![](https://raw.githubusercontent.com/CrisLeaf/microplay_recommender_api/main/index.jpeg)
+
+Where the green data is the queried product, and the red ones are the recommended products.
 
 
 ## Support
