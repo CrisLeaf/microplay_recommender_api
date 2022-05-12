@@ -99,7 +99,7 @@
     </style>
 
     <script>
-        async function getRecos(times = 0, queryUrl = "https://www.microplay.cl/producto/billetera-llavero-skull-luffy-pack-one-piece-abystyle/") {
+        async function getRecos(times = 0, queryUrl, first = false) {
             output = await fetch(`http://microplay-api.herokuapp.com/reco?url=${queryUrl}`)
                 .then(function(entry) {
                     return entry.json();
@@ -148,7 +148,9 @@
                 .catch(function(error) {
                     times += 1;
                     if (times < 20) {
-                        getRecos(times, queryUrl);
+                        getRecos(times, queryUrl, first);
+                    } else if (first) {
+                        setTimeout(function() {getRecos(0, queryUrl)}, 5000);
                     } else {
                         console.log("getRecos() Error: Out of tries.");
                     }
@@ -157,6 +159,8 @@
 
             return output;
         };
+
+
 
         var exampleList = [
             "https://www.microplay.cl/producto/resident-evil-viii-village-xbox-series-x/",
@@ -192,7 +196,9 @@
         function otherExample() {
             getRecos(0, exampleList[Math.floor(Math.random() * exampleList.length)]);
         }
-        getRecos(0, exampleList[Math.floor(Math.random() * exampleList.length)]);
+        // getRecos(0, exampleList[Math.floor(Math.random() * exampleList.length)], true);
+        getRecos(0, "asdf", true);
+
 
         function reloadRecos(queryUrl) {
             if (queryUrl[0] == "1") {
