@@ -1,174 +1,214 @@
 <!DOCTYPE html>
 <html>
 <body>
-<button type="button" id="button" onclick="getRecos()">Get Recos</button>
+    <button type="button" onclick="otherExample()">
+        Other Example
+    </button>
 
-<div class="base-title">
-<h1>Base Product</h1>
-</div>
-<div class="base-product">
+    <div class="base-title">
+    <h1 class="cris-title">Base Product</h1>
+    </div>
+    <div class="base-product" id="base-product">
+        <ul id="horizontal-list">
+            <li class="cris-li">
+                <img id="product-image0" src="" height="120"/>
+                <p id="name0" class="product-name"></p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="recommended-title">
+    <h1 class="cris-title">Next Recommendations (click any)</h1>
+    </div>
+    <div class="recommended-products">
     <ul id="horizontal-list">
-        <li>
-            <img id="product-image0" src="" height="120"/>
-            <p id="name0" class="product-name"></p>
+        <li class="cris-li">
+            <a class="cris-a" id="1prod-url" href="#base-product" onclick="reloadRecos(this.id)">
+                <img id="product-image1" src="" height="120"/>
+                <p id="name1" class="product-name"></p>
+            </a>
+        </li>
+        <li class="cris-li">
+            <a class="cris-a" id="2prod-url" href="#base-product" onclick="reloadRecos(this.id)">
+                <img id="product-image2" src="" height="120"/>
+                <p id="name2" class="product-name"></p>
+            </a>
+        </li>
+        <li class="cris-li">
+            <a class="cris-a" id="3prod-url" href="#base-product" onclick="reloadRecos(this.id)">
+                <img id="product-image3" src="" height="120"/>
+                <p id="name3" class="product-name"></p>
+            </a>
+        </li>
+        <li class="cris-li">
+            <a class="cris-a" id="4prod-url" href="#base-product" onclick="reloadRecos(this.id)">
+                <img id="product-image4" src="" height="120"/>
+                <p id="name4" class="product-name"></p>
+            </a>
+        </li>
+        <li class="cris-li">
+            <a class="cris-a" id="5prod-url" href="#base-product" onclick="reloadRecos(this.id)">
+                <img id="product-image5" src="" height="120"/>
+                <p id="name5" class="product-name"></p>
+            </a>
         </li>
     </ul>
-</div>
+    </div>
 
-<div class="recommended-title">
-<h1>Next Recommendations</h1>
-</div>
-<div class="recommended-products">
-<ul id="horizontal-list">
-    <li>
-        <a id="1prod-url" href="#" onclick="reloadRecos(this.id)">
-            <img id="product-image1" src="" height="120"/>
-            <p id="name1" class="product-name"></p>
-        </a>
-    </li>
-    <li>
-        <a id="2prod-url" href="#" onclick="reloadRecos(this.id)">
-            <img id="product-image2" src="" height="120"/>
-            <p id="name2" class="product-name"></p>
-        </a>
-    </li>
-    <li>
-        <a id="3prod-url" href="#" onclick="reloadRecos(this.id)">
-            <img id="product-image3" src="" height="120"/>
-            <p id="name3" class="product-name"></p>
-        </a>
-    </li>
-    <li>
-        <a id="4prod-url" href="#" onclick="reloadRecos(this.id)">
-            <img id="product-image4" src="" height="120"/>
-            <p id="name4" class="product-name"></p>
-        </a>
-    </li>
-    <li>
-        <a id="5prod-url" href="#" onclick="reloadRecos(this.id)">
-            <img id="product-image5" src="" height="120"/>
-            <p id="name5" class="product-name"></p>
-        </a>
-    </li>
-</ul>
-</div>
-
-<style>
-    a {
-        color: black;
-        text-decoration: none;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
-    .base-title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .recommended-title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .base-product {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .recommended-products {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    ul > li {
-        display: table-cell;
-        width: 10em;
-        padding: 0.6em;
-    }
-    .product-name {
-        flex-wrap: wrap;
-        font-size: 1em;
-    }
-</style>
-
-<script>
-    async function getRecos(times = 0, queryUrl = "https://www.microplay.cl/producto/billetera-llavero-skull-luffy-pack-one-piece-abystyle/") {
-        output = await fetch(`http://microplay-api.herokuapp.com/reco?url=${queryUrl}`)
-            .then(function(entry) {
-                return entry.json();
-            })
-            .then(function(entry) {
-                if (typeof entry == "object") {
-                    // console.log(entry);
-                    url0 = entry["recommendations"][0][0];
-                    url1 = entry["recommendations"][1][0];
-                    url2 = entry["recommendations"][2][0];
-                    url3 = entry["recommendations"][3][0];
-                    url4 = entry["recommendations"][4][0];
-                    url5 = entry["recommendations"][5][0];
-                    console.log("url1: " + url1);
-
-                    name0 = entry["recommendations"][0][1];
-                    name1 = entry["recommendations"][1][1];
-                    name2 = entry["recommendations"][2][1];
-                    name3 = entry["recommendations"][3][1];
-                    name4 = entry["recommendations"][4][1];
-                    name5 = entry["recommendations"][5][1];
-
-                    image0 = entry["recommendations"][0][2];
-                    image1 = entry["recommendations"][1][2];
-                    image2 = entry["recommendations"][2][2];
-                    image3 = entry["recommendations"][3][2];
-                    image4 = entry["recommendations"][4][2];
-                    image5 = entry["recommendations"][5][2];
-
-                    document.getElementById("name0").innerHTML = name0;
-                    document.getElementById("name1").innerHTML = name1;
-                    document.getElementById("name2").innerHTML = name2;
-                    document.getElementById("name3").innerHTML = name3;
-                    document.getElementById("name4").innerHTML = name4;
-                    document.getElementById("name5").innerHTML = name5;
-
-                    document.getElementById("product-image0").src = image0;
-                    document.getElementById("product-image1").src = image1;
-                    document.getElementById("product-image2").src = image2;
-                    document.getElementById("product-image3").src = image3;
-                    document.getElementById("product-image4").src = image4;
-                    document.getElementById("product-image5").src = image5;
-
-                    return entry;
-                };
-            })
-            .catch(function(error) {
-                times += 1;
-                if (times < 20) {
-                    getRecos(times, queryUrl);
-                } else {
-                    console.log("getRecos() Error: Out of tries.");
-                }
-
-            });
-
-        return output;
-    };
-
-    function reloadRecos(queryUrl) {
-        console.log(queryUrl[0]);
-        if (queryUrl[0] == "1") {
-            getRecos(0, url1);
-        } else if (queryUrl[0] == "2") {
-            getRecos(0, url2);
-        } else if (queryUrl[0] == "3") {
-            getRecos(0, url3);
-        } else if (queryUrl[0] == "4") {
-            getRecos(0, url4);
-        } else if (queryUrl[0] == "5") {
-            getRecos(0, url5);
+    <style>
+        .cris-a {
+            color: black;
+            text-decoration: none;
         }
-    }
+        .cris-a:hover {
+            text-decoration: underline;
+        }
+        .cris-title {
+            font-size: 1.5em;
+        }
+        .base-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .recommended-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .base-product {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .recommended-products {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+         .cris-li {
+            display: table-cell;
+            width: 10em;
+            padding: 1em;
+        }
+        .product-name {
+            flex-wrap: wrap;
+            font-size: 0.8em;
+        }
+    </style>
 
-</script>
+    <script>
+        async function getRecos(times = 0, queryUrl = "https://www.microplay.cl/producto/billetera-llavero-skull-luffy-pack-one-piece-abystyle/") {
+            output = await fetch(`http://microplay-api.herokuapp.com/reco?url=${queryUrl}`)
+                .then(function(entry) {
+                    return entry.json();
+                })
+                .then(function(entry) {
+                    if (typeof entry == "object") {
+                        // console.log(entry);
+                        url0 = entry["recommendations"][0][0];
+                        url1 = entry["recommendations"][1][0];
+                        url2 = entry["recommendations"][2][0];
+                        url3 = entry["recommendations"][3][0];
+                        url4 = entry["recommendations"][4][0];
+                        url5 = entry["recommendations"][5][0];
+
+                        name0 = entry["recommendations"][0][1];
+                        name1 = entry["recommendations"][1][1];
+                        name2 = entry["recommendations"][2][1];
+                        name3 = entry["recommendations"][3][1];
+                        name4 = entry["recommendations"][4][1];
+                        name5 = entry["recommendations"][5][1];
+
+                        image0 = entry["recommendations"][0][2];
+                        image1 = entry["recommendations"][1][2];
+                        image2 = entry["recommendations"][2][2];
+                        image3 = entry["recommendations"][3][2];
+                        image4 = entry["recommendations"][4][2];
+                        image5 = entry["recommendations"][5][2];
+
+                        document.getElementById("name0").innerHTML = name0;
+                        document.getElementById("name1").innerHTML = name1;
+                        document.getElementById("name2").innerHTML = name2;
+                        document.getElementById("name3").innerHTML = name3;
+                        document.getElementById("name4").innerHTML = name4;
+                        document.getElementById("name5").innerHTML = name5;
+
+                        document.getElementById("product-image0").src = image0;
+                        document.getElementById("product-image1").src = image1;
+                        document.getElementById("product-image2").src = image2;
+                        document.getElementById("product-image3").src = image3;
+                        document.getElementById("product-image4").src = image4;
+                        document.getElementById("product-image5").src = image5;
+
+                        return entry;
+                    };
+                })
+                .catch(function(error) {
+                    times += 1;
+                    if (times < 20) {
+                        getRecos(times, queryUrl);
+                    } else {
+                        console.log("getRecos() Error: Out of tries.");
+                    }
+
+                });
+
+            return output;
+        };
+
+        var exampleList = [
+            "https://www.microplay.cl/producto/resident-evil-viii-village-xbox-series-x/",
+            "https://www.microplay.cl/producto/animal-crossing-new-horizons-switch/",
+            "https://www.microplay.cl/producto/rainbow-six-siege-deluxe-edition-ps5/",
+            "https://www.microplay.cl/producto/elden-ring-ps5/",
+            "https://www.microplay.cl/producto/audifonos-gamer-mpower-sa-723-rosado-sades/",
+            "https://www.microplay.cl/producto/microfono-gamer-usb-mico-23791-trust/",
+            "https://www.microplay.cl/producto/combo-gamer-battle-ram-sa-d10-sades/",
+            "https://www.microplay.cl/producto/control-switch-tm-400506-tecmaster/",
+            "https://www.microplay.cl/producto/monitor-dsp-25-pulgadas-144hz-ozone/",
+            "https://www.microplay.cl/producto/fuente-de-poder-cv550-80-plus-bronze-corsair/",
+            "https://www.microplay.cl/producto/silla-gamer-scorpion-ch-106-verde-marvo-pro/",
+            "https://www.microplay.cl/producto/gabinete-niu-ak2-sades/",
+            "https://www.microplay.cl/producto/libreta-premium-star-wars-chewbacca/",
+            "https://www.microplay.cl/producto/mochila-dragon-ball-z-goku-dbz/",
+            "https://www.microplay.cl/producto/lapiz-star-wars-the-mandalorian-cutest-in-the-galaxy/",
+            "https://www.microplay.cl/producto/billetera-llavero-superman/",
+            "https://www.microplay.cl/producto/lampara-on-air-light/",
+            "https://www.microplay.cl/producto/llavero-batarang-3d-abystyle/",
+            "https://www.microplay.cl/producto/vaso-league-of-legends-hextech-3pc-gift-set/",
+            "https://www.microplay.cl/producto/tazon-friday-the-13th-jason-mask-shaped/",
+            "https://www.microplay.cl/producto/mascarilla-harry-potter-gryffindor/",
+            "https://www.microplay.cl/producto/mousepad-gaming-mm300-medium-corsair/",
+            "https://www.microplay.cl/producto/funko-pop-pokemon-pikachu-diamond/",
+            "https://www.microplay.cl/producto/peluche-6-nintendo-super-star/",
+            "https://www.microplay.cl/producto/puzzle-1000pcs-dragon-age-cast-of-thousands-dark-horse/",
+            "https://www.microplay.cl/producto/cubo-4-white-flat-v-cube/",
+            "https://www.microplay.cl/producto/pendrive-16gb-cruzer-blade-negro-sandisk/",
+            "https://www.microplay.cl/producto/figura-my-hero-academia-tomura-shigarakibanpresto/",
+            "https://www.microplay.cl/producto/cartas-mitos-y-leyendas-kilimanjaro-display-24-sobres/",
+            "https://www.microplay.cl/producto/cartas-yu-gi-oh-devastador-de-duelo-box-espanol/"
+        ];
+        function otherExample() {
+            getRecos(0, exampleList[Math.floor(Math.random() * exampleList.length)]);
+        }
+        getRecos(0, exampleList[Math.floor(Math.random() * exampleList.length)]);
+
+        function reloadRecos(queryUrl) {
+            if (queryUrl[0] == "1") {
+                getRecos(0, url1);
+            } else if (queryUrl[0] == "2") {
+                getRecos(0, url2);
+            } else if (queryUrl[0] == "3") {
+                getRecos(0, url3);
+            } else if (queryUrl[0] == "4") {
+                getRecos(0, url4);
+            } else if (queryUrl[0] == "5") {
+                getRecos(0, url5);
+            }
+        }
+
+    </script>
 
 </body>
 </html>
