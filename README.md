@@ -36,6 +36,16 @@ You would get the following:
 Where the green data is the queried product, and the red ones are the recommended products.
 
 
+## Tests
+
+To test the recommendation system on terminal run:
+
+```
+pytest test_app.py
+```
+
+
+
 ## Support
 
 Give a :star: if you like it :hugs:.
