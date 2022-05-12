@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <button type="button" onclick="otherExample()">
+    <button type="button" onclick="otherExample()" class="cris-button">
         Other Example
     </button>
 
@@ -23,31 +23,31 @@
     <div class="recommended-products">
     <ul id="horizontal-list">
         <li class="cris-li">
-            <a class="cris-a" id="1prod-url" href="#base-product" onclick="reloadRecos(this.id)">
+            <a class="cris-a" id="1prod-url" onclick="reloadRecos(this.id)">
                 <img id="product-image1" src="" height="120"/>
                 <p id="name1" class="product-name"></p>
             </a>
         </li>
         <li class="cris-li">
-            <a class="cris-a" id="2prod-url" href="#base-product" onclick="reloadRecos(this.id)">
+            <a class="cris-a" id="2prod-url" onclick="reloadRecos(this.id)">
                 <img id="product-image2" src="" height="120"/>
                 <p id="name2" class="product-name"></p>
             </a>
         </li>
         <li class="cris-li">
-            <a class="cris-a" id="3prod-url" href="#base-product" onclick="reloadRecos(this.id)">
+            <a class="cris-a" id="3prod-url" onclick="reloadRecos(this.id)">
                 <img id="product-image3" src="" height="120"/>
                 <p id="name3" class="product-name"></p>
             </a>
         </li>
         <li class="cris-li">
-            <a class="cris-a" id="4prod-url" href="#base-product" onclick="reloadRecos(this.id)">
+            <a class="cris-a" id="4prod-url" onclick="reloadRecos(this.id)">
                 <img id="product-image4" src="" height="120"/>
                 <p id="name4" class="product-name"></p>
             </a>
         </li>
         <li class="cris-li">
-            <a class="cris-a" id="5prod-url" href="#base-product" onclick="reloadRecos(this.id)">
+            <a class="cris-a" id="5prod-url" onclick="reloadRecos(this.id)">
                 <img id="product-image5" src="" height="120"/>
                 <p id="name5" class="product-name"></p>
             </a>
@@ -61,11 +61,12 @@
             text-decoration: none;
         }
         .cris-a:hover {
+            cursor: pointer;
             text-decoration: underline;
         }
         .cris-title {
             text-align: center;
-            font-size: 1.5em;
+            font-size: 1.2em;
         }
         .base-title {
             display: flex;
@@ -95,6 +96,9 @@
         .product-name {
             flex-wrap: wrap;
             font-size: 0.8em;
+        }
+        .cris-button {
+            border-radius: 0.5em;
         }
     </style>
 
@@ -182,7 +186,6 @@
             "https://www.microplay.cl/producto/llavero-batarang-3d-abystyle/",
             "https://www.microplay.cl/producto/vaso-league-of-legends-hextech-3pc-gift-set/",
             "https://www.microplay.cl/producto/tazon-friday-the-13th-jason-mask-shaped/",
-            "https://www.microplay.cl/producto/mascarilla-harry-potter-gryffindor/",
             "https://www.microplay.cl/producto/mousepad-gaming-mm300-medium-corsair/",
             "https://www.microplay.cl/producto/funko-pop-pokemon-pikachu-diamond/",
             "https://www.microplay.cl/producto/peluche-6-nintendo-super-star/",
