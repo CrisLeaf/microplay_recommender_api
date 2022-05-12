@@ -36,7 +36,7 @@ class Recommender():
 
         random_sim = sparse.csr_matrix(np.random.rand(self.df.shape[0], self.df.shape[0]))
 
-        self.similarity = 0.3*name_sim + 0.3*description_sim + 0.2*random_sim + 0.1*discount_sim
+        self.similarity = 0.3*name_sim + 0.3*description_sim + 0.2*random_sim
 
         return self
 
