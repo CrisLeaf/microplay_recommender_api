@@ -34,7 +34,7 @@ class Recommender():
         discount_sim = discount_sim / max(self.df["discount"])
         discount_sim = sparse.csr_matrix(discount_sim)
 
-        self.similarity = 0.3*name_sim + 0.8*description_sim + 0.4*price_sim + 0.1*discount_sim
+        self.similarity = 0.6*name_sim + 0.8*description_sim + 0.2*price_sim + 0.1*discount_sim
 
 
         return self
